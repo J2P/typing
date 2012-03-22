@@ -1,8 +1,47 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url(../images/grid-18px-masked.png);
+  background-repeat: repeat-x;
+  background-position: 0 0px;
 }
 
 a {
   color: #00B7FF;
+}
+
+#content{
+	margin-left: -20px;
+	height: 750px;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright:0px;
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-bottomright:5px;
+	-webkit-border-top-left-radius:0px;
+	-webkit-border-top-right-radius:0px;
+	-webkit-border-bottom-left-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	border-top-left-radius:0px;
+	border-top-right-radius:0px;
+	border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;
+	background: #fff;
+}
+
+#wordWrap{
+	height: 700px;
+}
+
+#inputWrap{
+	text-align: center;
+}
+
+#inputWrap input{
+	padding: 10px;
+}
+
+#aside{
+	padding: 20px 0;
 }

@@ -18,8 +18,9 @@ body {
 	background: #252733;
 }
 
-#wordWrap{
+#container{
 	height: 700px;
+	position: relative;
 }
 
 #inputWrap{

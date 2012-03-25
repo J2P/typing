@@ -44,6 +44,21 @@ Typing.Init = (function(tp, $){
 	};
 
 	/**
+	 * @method miss
+	 */
+	var miss = function() {
+		var bar = parseInt($('.bar')[0].style.width);
+
+		if (bar > 0) {
+			var out =  bar - 10;
+
+			$('.bar').animate({'width': out+'%'});
+		} else {
+			tp.Init.stop();
+		}
+	};
+
+	/**
 	 * @method setSpeed
 	 */
 	var setSpeed = function(sp) {
@@ -85,6 +100,36 @@ Typing.Init = (function(tp, $){
 		return width;
 	};
 
+	$('#wordBox').on({
+		'keydown': function(e) {
+
+			if (e.keyCode == '13') {
+				var $wordBox = $(this);
+				var $text = $wordBox.val();
+				var $words = $('.btn', $container);
+				var find = false;
+
+				$words.each(function(i){
+					if(this.innerText == $text) {
+						find = true;
+
+						$(this).stop().fadeOut(500, function(){
+							$(this).remove();
+						});
+					}
+				});
+
+				if (!find) {
+					tp.Init.miss();
+				}
+
+				$wordBox.val('');
+
+				return false;
+			}
+		}
+	});
+
 	$(window).on('resize', function(){
 		_setLeft();
 		_setWidth();
@@ -93,6 +138,7 @@ Typing.Init = (function(tp, $){
 	return {
 		start: start,
 		stop: stop,
+		miss: miss,
 		getSpeed: getSpeed,
 		setSpeed: setSpeed,
 		getLeft: getLeft,
@@ -171,7 +217,10 @@ Typing.Word = (function(tp, $){
 		$newWord.animate({
 			'top': '+=672'
 		}, tp.Init.getSpeed(), function(){
-			$newWord.fadeOut().remove();
+			$newWord.fadeOut(1000, function(){
+				$(this).remove();
+				tp.Init.miss();
+			});
 		});
 	};
 

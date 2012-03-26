@@ -101,8 +101,7 @@ Typing.Init = (function(tp, $){
 	};
 
 	$('#wordBox').on({
-		'keydown': function(e) {
-
+		'keypress': function(e) {
 			if (e.keyCode == '13') {
 				var $wordBox = $(this);
 				var $text = $wordBox.val();
@@ -110,7 +109,7 @@ Typing.Init = (function(tp, $){
 				var find = false;
 
 				$words.each(function(i){
-					if(this.innerText == $text) {
+					if($(this).text() == $text) {
 						find = true;
 
 						$(this).stop().fadeOut(500, function(){

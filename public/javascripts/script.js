@@ -224,8 +224,8 @@ Typing.Word = (function(tp, $){
 			$position = Math.floor( (Math.random() * ($width - $left)) + $left ),
 
 			$newWord = $('<span>', {
-				text: words[Math.floor(Math.random() * words.length)],
-				class: 'btn btn'+this.style()
+				'text': words[Math.floor(Math.random() * words.length)],
+				'class': 'btn btn'+this.style()
 			}).css({
 				'position': 'absolute',
 				'top': '0',

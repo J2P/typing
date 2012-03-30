@@ -24,7 +24,7 @@ var passport = require('passport'),
 	passport.use(new TwitterStrategy({
 			consumerKey: TWITTER_CONSUMER_KEY,
 			consumerSecret: TWITTER_CONSUMER_SECRET,
-			callbackURL: "http://typing.j2p.kr:3000/auth/twitter/callback",
+			callbackURL: "http://typing.j2p.kr/auth/twitter/callback",
 			userAuthorizationURL: 'https://api.twitter.com/oauth/authorize'
 		},
 		function(token, tokenSecret, profile, done) {

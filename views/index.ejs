@@ -11,7 +11,9 @@
 		<div id="aside" class="span2">
 			<div class="infoWrap">
 				<div class="alert">
-				J2P
+				<% if (user) { %>
+					<img src="<%= user._json.profile_image_url %>" class="profile" /><span>@<%= user.username %></span>
+				<% } %>
 				</div>
 				<div class="alert">
 				Level 1
@@ -31,8 +33,11 @@
 		<h1>Typing Game</h1>
 	</div>
 	<div class="modal-footer">
-		<a href="/auth/twitter" class="btn">Twitter Login</a>
+		<% if (user) { %>
 		<a href="#" class="btn btn-primary">Game Start</a>
+		<% } else { %>
+		<a href="/auth/twitter" class="btn">Twitter Login</a>
+		<% } %>
 	</div>
 </div>
 <div class="modal hide fade" id="closeModal">

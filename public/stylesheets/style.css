@@ -132,6 +132,13 @@ body {
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#4a4f63', endColorstr='#323848');
 }
 
+#aside .infoWrap div.alert .profile{
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
 .modal{
   background: none;
   color: #fff;

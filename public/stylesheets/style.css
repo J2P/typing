@@ -131,3 +131,31 @@ body {
 	background: -moz-linear-gradient(top,  #4a4f63,  #323848);
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#4a4f63', endColorstr='#323848');
 }
+
+.modal{
+  background: none;
+  color: #fff;
+}
+
+.modal h1{
+  font-size: 77px;
+  line-height: 95px;
+  text-align: center;
+}
+
+#closeModal h1{
+ font-size: 93px;
+}
+
+#closeModal .modal-footer p{
+  color: #000;
+  float: left;
+  line-height: 28px;
+  margin: 0;
+}
+
+a.github{
+  position: absolute;
+  top: 0;
+  right: 0;
+}

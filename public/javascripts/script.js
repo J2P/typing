@@ -80,10 +80,15 @@ Typing.Init = (function(tp, $){
 	};
 
 	/**
-	 * @method start
+	 * @private
 	 */
-	var start = function() {
+	var _startGame = function(event) {
+		event.preventDefault();
+
+		var $modalBackdrop = $('.modal-backdrop');
 		var $container = $('#container');
+
+		$(this).parents('.modal').modal('hide');
 
 		_resetProgress();
 
@@ -122,14 +127,21 @@ Typing.Init = (function(tp, $){
 		}
 	};
 
-	$('#closeModal').on({
-		'click': function(event) {
-			event.preventDefault();
-			$('#closeModal').modal('hide');
-			tp.Init.start();
-		}
-	}, '.btn');
+	$('#startModal').modal({'backdrop': 'static'});
 
+	/**
+	 * 다시시작
+	 */
+	$('#closeModal').on({'click': _startGame}, '.btn');
+
+	/**
+	 * 처음시작
+	 */
+	$('#startModal').on({'click': _startGame}, '.btn-primary');
+
+	/**
+	 * 입력상자
+	 */
 	$('#wordBox').on({
 		'keypress': function(e) {
 			if (e.keyCode == '13') {
@@ -152,8 +164,9 @@ Typing.Init = (function(tp, $){
 		_setWidth();
 	});
 
+	
+
 	return {
-		start: start,
 		stop: stop,
 		miss: miss,
 		getSpeed: getSpeed,

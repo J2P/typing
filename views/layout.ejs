@@ -8,11 +8,23 @@
   </head>
   <body>
     <%- body %>
+    <a href="http://github.com/J2P/typing" class="github" target="_blank">
+      <img src="/images/forkme.png" alt="github" />
+    </a>
     <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script>
     <script src="/javascripts/script.js"></script>
     <script>
-      Typing.Init.start();
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26077425-4']);
+      _gaq.push(['_setDomainName', '.j2p.kr']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
     </script>
   </body>
 </html>

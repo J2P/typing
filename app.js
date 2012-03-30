@@ -8,6 +8,22 @@ var express = require('express')
 
 var app = module.exports = express.createServer();
 
+var passport = require('passport')
+  , TwitterStrategy = require('passport-twitter').TwitterStrategy
+  , TWITTER_CONSUMER_KEY = 'UmcrZok4nTmT1ykNA52Q'
+  , TWITTER_CONSUMER_SECRET = 'lmcluBB1WdAZT9lOcWPx0QMVCbe5KN5E5ajyxuIj8';
+
+	passport.use(new TwitterStrategy({
+			consumerKey: TWITTER_CONSUMER_KEY,
+			consumerSecret: TWITTER_CONSUMER_SECRET,
+			callbackURL: "http://typing.j2p.kr/auth/twitter/callback"
+		},
+		function(token, tokenSecret, profile, done) {
+			console.log('a');
+			done();
+		}
+	));
+
 // Configuration
 
 app.configure(function(){
@@ -28,6 +44,9 @@ app.configure('production', function(){
 });
 
 // Routes
+
+app.get('/auth/twitter', passport.authenticate('twitter'));
+app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/', failureRedirect: '/login' }));
 
 app.get('/', routes.index);
 

@@ -17,6 +17,7 @@ Typing.Init = (function(tp, $){
 	var speed = 10000,
 		level = 1,
 		time = null,
+		myscore = 0,
 		$container = $('#container'),
 
 		left = (function(){
@@ -54,6 +55,21 @@ Typing.Init = (function(tp, $){
 	 */
 	var getLevel = function() {
 		return level;
+	}
+
+	/**
+	 * @method setScore
+	 * @param {Number} sc
+	 */
+	var setScore = function(sc) {
+		myscore += 10 - sc;
+	};
+
+	/**
+	 * @method getScore
+	 */
+	var getScore = function() {
+		return myscore;
 	}
 
 	/**
@@ -145,6 +161,8 @@ Typing.Init = (function(tp, $){
 
 		$('span.btn').stop().remove();
 
+		$('#levelView').text(level + '레벨');
+		$('#scoreView').text(myscore + '점');
 		$('#closeModal').modal({'backdrop': 'static'});
 	};
 
@@ -220,6 +238,8 @@ Typing.Init = (function(tp, $){
 		setSpeed: setSpeed,
 		getLevel: getLevel,
 		setLevel: setLevel,
+		getScore: getScore,
+		setScore: setScore,
 		getLeft: getLeft,
 		getWidth: getWidth
 	}
@@ -237,17 +257,7 @@ Typing.Word = (function(tp, $){
 	var words = 'FRENDS 가 구성된지 언 2년이 되어갑니다. 그동안 발표 형식의 기술 공유를 많이 해왔었고 올해는 서로 모여서 코딩하는 모임을 갖어보고자 시작하였습니다. 그리고 작은 아이디어도 함께 모여 구현을 해보는 그런 행사의 첫 시발점이 되고자 내부의 행사를 마련해서 진행을 해보고 있습니다.오픈 커뮤니티가 아니고 행사 운영에 대한 경험도 없고 시행착오에 대한 리스크를 떠 않고 행사를 키우기에는 부담이 있어 FRENDS 내부적으로 행사를 진행하고 있습니다.내부적인 행사이기는 하지만 해카톤 진행에서 나온 결과는 최대한 오픈할 계획입니다.'.split(' '),
 		$container = $('#container'),
 		myscore = 0;
-
-	/**
-	 * @private
-	 * @param {Number}
-	 * @return {Number} myscore
-	 */
-	var _updateScore = function(sc) {
-		myscore += 10 - sc;
-
-		return myscore;
-	};
+		
 
 	/**
 	 * @private
@@ -328,7 +338,7 @@ Typing.Word = (function(tp, $){
 				var $btn = $(this);
 				var $style = 'badge-'+$btn.attr('class').replace(/btn-?\s?/g, '').replace('danger', 'error');
 
-				$('span.badge').addClass($style).fadeIn('fast', function(){
+				$('#container .badge').addClass($style).fadeIn('fast', function(){
 					$btn.stop();
 				}).animate({
 					'left' : parseInt($(this).css('left'), 10) + ($btn.width() / 2),
@@ -339,8 +349,10 @@ Typing.Word = (function(tp, $){
 						var level  = tp.Init.getLevel();
 
 						$(this).remove();
-
-						$score.text(_updateScore($topValue));
+						tp.Init.setScore($topValue);
+						myscore = tp.Init.getScore();
+						$score.text(myscore);
+						
 
 						if (myscore >= 100 && level === 1) {
 							_changeLevel();

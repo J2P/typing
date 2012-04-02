@@ -10,8 +10,11 @@ var app = module.exports = express.createServer();
 
 var passport = require('passport'),
 	TwitterStrategy = require('passport-twitter').Strategy,
+	FacebookStrategy = require('passport-facebook').Strategy,
 	TWITTER_CONSUMER_KEY = 'UmcrZok4nTmT1ykNA52Q',
-	TWITTER_CONSUMER_SECRET = 'lmcluBB1WdAZT9lOcWPx0QMVCbe5KN5E5ajyxuIj8';
+	TWITTER_CONSUMER_SECRET = 'lmcluBB1WdAZT9lOcWPx0QMVCbe5KN5E5ajyxuIj8',
+	FACEBOOK_APP_ID = '123999974396667',
+	FACEBOOK_APP_SECRET = '15127106c8f5f38137cd8231c05f1d33';
 
   	passport.serializeUser(function(user, done) {
 	  done(null, user);
@@ -32,6 +35,18 @@ var passport = require('passport'),
 				done(null, profile);
 			});
 		}
+	));
+
+	passport.use(new FacebookStrategy({
+	    clientID: FACEBOOK_APP_ID,
+	    clientSecret: FACEBOOK_APP_SECRET,
+	    callbackURL: "http://typing.j2p.kr/auth/facebook/callback"
+	  },
+	  function(accessToken, refreshToken, profile, done) {
+	    process.nextTick(function () {
+	      return done(null, profile);
+	    });
+	  }
 	));
 
 // Configuration
@@ -61,6 +76,9 @@ app.configure('production', function(){
 
 app.get('/auth/twitter', passport.authorize('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/', failureRedirect: '/login' }));
+
+app.get('/auth/facebook', passport.authorize('facebook'));
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
 
 app.get('/', routes.index);
 

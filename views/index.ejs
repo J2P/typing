@@ -12,7 +12,14 @@
 			<div class="infoWrap">
 				<div class="alert">
 				<% if (user) { %>
-					<img src="<%= user._json.profile_image_url %>" class="profile" /><span>@<%= user.username %></span>
+					<% if (user._json.profile_image_url) { %>
+					<img src="<%= user._json.profile_image_url %>" class="profile" />
+					<% } %>
+					<% if (user.provider == 'facebook') { %>
+					<span><%= user.displayName %></span>
+					<% } else { %>
+					<span>@<%= user.username %></span>
+					<% } %>
 				<% } %>
 				</div>
 				<div class="alert">

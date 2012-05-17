@@ -2,7 +2,7 @@
 	<div class="row">
 		<div id="content" class="span10">
 			<div id="container">
-				<span class="badge"></span>
+				<div class="wordWrap"></div>
 			</div>
 			<div id="inputWrap">
 				<input type="text" class="input-xlarge" id="wordBox" placeholder="단어입력" style="ime-mode:active" />
@@ -22,14 +22,14 @@
 					<% } %>
 				<% } %>
 				</div>
-				<div class="alert">
+				<!-- div class="alert">
 				Level <span id="level">1</span>
-				</div>
+				</div -->
 				<div class="alert">
 					<span id="score">0</span>점
 				</div>
 				<div class="progress progress-danger progress-striped active">
-					<div class="bar" style="width:100%"></div>
+					<div class="bar" style="width:100%">100</div>
 				</div>
 			</div>
 		</div>
@@ -46,6 +46,7 @@
 		<a href="/auth/facebook" class="btn">Facebook Login</a>
 		<a href="/auth/twitter" class="btn">Twitter Login</a>
 		<% } %>
+		<a href="#" class="btn btn-primary">Game Start</a>
 	</div>
 </div>
 <div class="modal hide fade" id="closeModal">
@@ -53,6 +54,6 @@
 		<h1>Game Over</h1>
 	</div>
 	<div class="modal-footer">
-		<p><span class="badge badge-error" id="levelView"></span> 클리어하고, <span class="badge badge-error" id="scoreView"></span> 받으셨습니다.</p><a href="#" class="btn btn-primary">Restart</a>
+		<p><span class="badge badge-error" id="scoreView"></span> 받으셨습니다.</p><a href="#" class="btn btn-primary">Restart</a>
 	</div>
 </div>

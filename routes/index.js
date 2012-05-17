@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){	
-  res.render('index', { title: 'Word Typing', user: req.user });
+  res.render('index', { title: 'Method Typing', user: req.user });
 };

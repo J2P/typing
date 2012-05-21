@@ -1,0 +1,58 @@
+<div class="container">
+	<div class="row">
+		<div id="content" class="span10">
+			<div id="container">
+				<div class="wordWrap"></div>
+			</div>
+			<div id="inputWrap">
+				<input type="text" class="input-xlarge" id="wordBox" placeholder="단어입력" style="ime-mode:active" />
+			</div>
+		</div>
+		<div id="aside" class="span2">
+			<div class="infoWrap">
+				<div class="alert">
+				<% if (user) { %>
+					<% if (user._json.profile_image_url) { %>
+					<img src="<%= user._json.profile_image_url %>" class="profile" />
+					<% } %>
+					<% if (user.provider == 'facebook') { %>
+					<span><%= user.displayName %></span>
+					<% } else { %>
+					<span>@<%= user.username %></span>
+					<% } %>
+				<% } %>
+				</div>
+				<!-- div class="alert">
+				Level <span id="level">1</span>
+				</div -->
+				<div class="alert">
+					<span id="score">0</span>점
+				</div>
+				<div class="progress progress-danger progress-striped active">
+					<div class="bar" style="width:100%">100</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal hide fade" id="startModal">
+	<div class="modal-header">
+		<h1>Typing Game</h1>
+	</div>
+	<div class="modal-footer">
+		<% if (user) { %>
+		<a href="#" class="btn btn-primary">Game Start</a>
+		<% } else { %>
+		<a href="/auth/facebook" class="btn">Facebook Login</a>
+		<a href="/auth/twitter" class="btn">Twitter Login</a>
+		<% } %>
+	</div>
+</div>
+<div class="modal hide fade" id="closeModal">
+	<div class="modal-header">
+		<h1>Game Over</h1>
+	</div>
+	<div class="modal-footer">
+		<p><span class="badge badge-error" id="scoreView"></span> 받으셨습니다.</p><a href="#" class="btn btn-primary">Restart</a>
+	</div>
+</div>

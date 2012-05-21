@@ -1,0 +1,42 @@
+<div class="container">
+	<div class="row">
+		<div class="span10">
+			<div id="roomlist">
+				<div class="span4">
+					<div class="alert alert-info">
+						<h3>1. J2P님이 만드신 방</h3>
+						<div class="wrap">
+							<img src="http://a0.twimg.com/profile_images/1602430510/____1__normal.JPG" alt="" />
+							<img src="http://a0.twimg.com/profile_images/1602430510/____1__normal.JPG" alt="" />
+							<img src="http://a0.twimg.com/profile_images/1602430510/____1__normal.JPG" alt="" />
+							<img src="http://a0.twimg.com/profile_images/1602430510/____1__normal.JPG" alt="" />
+							<a href="room1" class="btn btn-large"><i class="icon-user"></i>입장</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="span2">
+			<div class="infoWrap">
+				<% if (isSuccess) { %>
+					<% for(var i = 0, len = users.length; i < len; i++) {%>
+					<div class="alert">
+						<img src="<%= users[i].profile %>" class="profile" />
+						<span class="nick"><%= users[i].nickname %></span>
+					</div>
+					<% } %>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(function(){
+		var room = io.connect('/join');
+		room.on('connect', function() {
+			room.on('join', function() {
+
+			});
+		});
+	});
+</script>

@@ -1,95 +1,65 @@
+var express = require('express');
+var path = require('path');
+var favicon = require('static-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var debug = require('debug')('typing');
 
-/**
- * Module dependencies.
- */
+var index = require('./routes/index');
+var game = require('./routes/game');
 
-var express = require('express'),
-	routes = require('./routes'),
-	sio = require('socket.io');
+var app = express();
 
-var app = module.exports = express.createServer();
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
-var passport = require('passport'),
-	TwitterStrategy = require('passport-twitter').Strategy,
-	FacebookStrategy = require('passport-facebook').Strategy,
-	TWITTER_CONSUMER_KEY = 'UmcrZok4nTmT1ykNA52Q',
-	TWITTER_CONSUMER_SECRET = 'lmcluBB1WdAZT9lOcWPx0QMVCbe5KN5E5ajyxuIj8',
-	FACEBOOK_APP_ID = '123999974396667',
-	FACEBOOK_APP_SECRET = '15127106c8f5f38137cd8231c05f1d33';
+app.use(favicon());
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-  	passport.serializeUser(function(user, done) {
-	  done(null, user);
-	});
+app.use('/', index);
+app.use('/game', game);
 
-	passport.deserializeUser(function(obj, done) {
-	  done(null, obj);
-	});
-
-	passport.use(new TwitterStrategy({
-			consumerKey: TWITTER_CONSUMER_KEY,
-			consumerSecret: TWITTER_CONSUMER_SECRET,
-			callbackURL: "http://typing.j2p.kr/auth/twitter/callback",
-			userAuthorizationURL: 'https://api.twitter.com/oauth/authorize'
-		},
-		function(token, tokenSecret, profile, done) {
-			process.nextTick(function(){
-				done(null, profile);
-			});
-		}
-	));
-
-	passport.use(new FacebookStrategy({
-	    clientID: FACEBOOK_APP_ID,
-	    clientSecret: FACEBOOK_APP_SECRET,
-	    callbackURL: "http://typing.j2p.kr/auth/facebook/callback"
-	  },
-	  function(accessToken, refreshToken, profile, done) {
-	    process.nextTick(function () {
-	      return done(null, profile);
-	    });
-	  }
-	));
-
-// Configuration
-
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser());
-  app.use(express.session({ secret: 'keyboard cat'}));
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
+/// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
-app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+/// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
 
-app.configure('production', function(){
-  app.use(express.errorHandler());
-});
 
-// Routes
 
-app.get('/auth/twitter', passport.authorize('twitter'));
-app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/join', failureRedirect: '/login' }));
+app.set('port', process.env.PORT || 3000);
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/join', failureRedirect: '/login' }));
-
-app.get('/', routes.index);
-app.get('/join', routes.join);
-
-app.listen(5029, function() {
-	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-});
-
-var io = sio.listen(app);
-
-io.sockets.on('connection', function(socket) {
-	console.log('connected');
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
 });

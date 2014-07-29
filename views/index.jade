@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  div.container
+    header.jombotron.masthead
+      div.inner
+        h1 Method Typing
+      div.buttons
+        a.btn.btn-info.btn-lg.btn-block(href="/auth/twitter")
+          i.fa.fa-twitter  Twitter login
+        a.btn.btn-primary.btn-lg.btn-block(href="/auth/facebook")
+          i.fa.fa-facebook  Facebook login  
+      div.panel.panel-default.ranking
+        div.panel-heading Ranking
+        ul.list-group
+          each user, i in users
+            li.list-group-item #{i+1}. #{user}
+              span.badge #{scores[i]}
+      

@@ -1,36 +1,40 @@
-var game = require('./game');
+var express = require('express');
+var redis = require('redis');
+var router = express.Router();
+var client = redis.createClient();
 
-exports.index = function(req, res){	
-	res.render('index', { title: 'Method Typing', user: req.user });
-};
 
-exports.join = function(req, res) {
-	var isSuccess = false,
-		user = req.user,
-		profile = null,
-		nickname = user.username;
-
-		if (user.provider === 'facebook') {
-
-			profile = 'https://graph.facebook.com/'+user.username+'/picture?return_ssl_resources=true';
-		} else {
-			profile = user._json.profile_image_url;
-		}
-		
-	if (nickname && nickname.trim() !== '') {
-		if (!game.hasUser(nickname)) {
-			game.addUser({
-				nickname: nickname,
-				profile: profile
+router.get('/', function(req, res) {
+  	client.zrange('typing', 0, -1, "WITHSCORES", function (err, replies) {
+		var users = [];
+		var scores = [];
+		var ranks = [];
+		var len = 100;
+		if (!err) {
+			replies.forEach(function(reply, i) {
+				if (i % 2 == 0) {
+					users.push(reply);
+				} else {
+					scores.push(reply);
+				}
 			});
-			req.session.nickname = nickname;
-			isSuccess = true;
+
+			users.reverse();
+			scores.reverse();
+			client.quit();
+
+			if (users.length < 100) {
+				len = users.length;
+			}
+
+			res.render('index', { 
+				title: 'Typing Game', 
+				user: req.user,
+				users: users,
+				scores: scores
+			});
 		}
-	}
-		
-	res.render('room', {
-		title: 'Method Typing',
-		isSuccess: isSuccess,
-		users: game.users
-	})
-};
+	});
+});
+
+module.exports = router;

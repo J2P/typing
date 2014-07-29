@@ -71,6 +71,22 @@ body {
   border-radius: 6px;
 }
 
+.ranking {
+  width: 30%;
+  margin: 20px auto;
+}
+
+.ranking h2 {
+  padding: 5px;
+  color: #fff;
+  text-align: center;
+}
+
+.ranking .list-group {
+	height: 350px;
+	overflow-y: scroll;
+}
+
 .masthead h1, .masthead p{
   text-align: center;
 }
@@ -80,6 +96,11 @@ body {
   margin-right: 5%;
   font-size: 30px;
   line-height: 36px;
+}
+
+.buttons {
+	width: 50%;
+	margin: 0 auto;
 }
 
 .badge-warning {
@@ -216,49 +237,4 @@ a.github{
   position: absolute;
   top: 0;
   right: 0;
-}
-
-#roomlist{
-  margin-top: 50px;
-  height: 750px;
-  overflow-y: scroll;
-}
-
-#roomlist .wrap{
-  overflow: hidden;
-  height: 48px;
-  border: 1px solid #8287a8;
-  border-radius: 5px;
-  background: #fff;
-  box-shadow: inset 0 0 3px 3px #21242d;
-  background: #252733;
-  padding: 10px;
-}
-
-#roomlist .alert{
-  padding: 8px 20px;
-  color: #fff;
-  border: 1px solid #181a27;
-  box-shadow: 0 1px 2px rgba(0,0,0,.2);
-  background: #323848;
-  background: -webkit-gradient(linear, left top, left bottom, from(#4a4f63), to(#323848));
-  background: -moz-linear-gradient(top,  #4a4f63,  #323848);
-  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#4a4f63', endColorstr='#323848');
-}
-
-#roomlist .alert h3{
-  margin-bottom: 10px;
-  height: 27px;
-}
-
-#roomlist .alert img{
-  border-radius: 5px;
-  vertical-align: middle;
-  float: left;
-  margin-right: 5px;
-}
-
-#roomlist .btn{
-  float: right;
-  margin-top: 5px;
 }
